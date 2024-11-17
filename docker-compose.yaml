@@ -40,3 +40,17 @@ services:
       REACT_APP_KEYCLOAK_URL: http://localhost.proxyman.io:8080
       REACT_APP_KEYCLOAK_REALM: reports-realm
       REACT_APP_KEYCLOAK_CLIENT_ID: reports-frontend
+    depends_on:
+      - keycloak
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      KEYCLOAK_URL: http://keycloak:8080
+      KEYCLOAK_REALM: reports-realm
+      KEYCLOAK_ISSUER: http://localhost.proxyman.io:8080/realms/reports-realm
+    depends_on:
+      - keycloak

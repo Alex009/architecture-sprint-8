@@ -12,21 +12,20 @@ import java.net.URL
 import java.util.Date
 
 fun Application.configureSecurity() {
-    val jwtRealm = "reports-realm"
-
-    val keycloakUrl = "http://localhost.proxyman.io:8080"
-    val keycloakRealm = "reports-realm"
+    val config = environment.config
+    val keycloakUrl = config.property("jwt.keycloak.url").getString()
+    val keycloakRealm = config.property("jwt.keycloak.realm").getString()
+    val keycloakIssuer = config.property("jwt.keycloak.issuer").getString()
 
     authentication {
         jwt("auth-jwt") {
-            realm = jwtRealm
             verifier(
                 // получаем ключи для верификации с keycloak
                 jwkProvider = UrlJwkProvider(
                     URL("$keycloakUrl/realms/$keycloakRealm/protocol/openid-connect/certs")
                 ),
                 // проверяем что выпущен jwt нашим keycloak и в нужном realm
-                issuer = "$keycloakUrl/realms/$keycloakRealm"
+                issuer = keycloakIssuer
             )
             validate { credential ->
                 // проверяем не истек ли срок жизни токена
