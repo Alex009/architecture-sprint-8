@@ -1,0 +1,6 @@
+ktor:
+  application:
+    modules:
+      - ru.alex009.ApplicationKt.module
+  deployment:
+    port: 8000
