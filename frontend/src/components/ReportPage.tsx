@@ -22,7 +22,7 @@ const ReportPage: React.FC = () => {
         }
       });
 
-      
+
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -51,7 +51,7 @@ const ReportPage: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="p-8 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-6">Usage Reports</h1>
-        
+
         <button
           onClick={downloadReport}
           disabled={loading}
@@ -67,6 +67,15 @@ const ReportPage: React.FC = () => {
             {error}
           </div>
         )}
+
+        <br/>
+        <button
+          onClick={() => keycloak.logout()}
+          className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600`}
+          style={{marginTop: 16}}
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
